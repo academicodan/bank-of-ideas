@@ -34,12 +34,13 @@ body {
 }
 
 body, input, textarea, button {
-  font: 500 1rem sans-serif;
-  color: var(--gray-500);
+  font: 300 1rem 'Roboto', sans-serif;
 }
 
 h1 {
-  font-size: 2rem;
+  font-size: 2.2rem;
+  line-height: 2.5rem;
+  font-weight: 300;
 }
 
 h2 {
@@ -48,4 +49,8 @@ h2 {
 
 button {
   cursor: pointer;
+}
+
+.MuiFormControl-root {
+  margin-bottom: 3rem !important;
 }

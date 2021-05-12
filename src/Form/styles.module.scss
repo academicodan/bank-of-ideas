@@ -1,127 +1,32 @@
-// .formContainer {
-//   padding: 3rem 4rem;
-
-//   width: 45.25rem;
-//   height: 100vh;
-
-//   background: var(--blue-50);
-
-//   fieldset {
-//     border: 0;
-//   }
-
-//   input, select, textarea, button {
-//     border-radius: 5px;
-//   }
-
-//   input, select, textarea {
-//     padding: 0.2rem;
-//     border: 1px solid var(--blue-500);
-//     display: block;
-//     box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
-//     &:focus{
-//       background: var(--gray-50);
-//     }
-//   }
-// }
-
-// .title {
-//  margin-left: 7%;
-// }
-
-// .caption {
-//   margin-left: 10%;
-// }
-
-// .group {
-
-// }
-
-// .field {
-//   margin-bottom: 1rem;
-//   label {
-//     margin-bottom: 0.2rem;
-//     color: var(--gray-500);
-//     display: block;
-//   }
-//   select option {
-//     padding-right: 1rem;
-//   }
-// }
-
-
-
-// .buttonSubmit {
-//   font-size: 1.2rem;
-//   background: var(--blue-500);
-//   border: 0;
-//   margin-bottom: 1rem;
-//   color: var(--white);
-//   padding: 0.2rem 0.6rem;
-//   box-shadow: 2px 2px 2px rgba($color: #000000, $alpha: 0.2);
-//   text-shadow: 1px 1px 1px rgba($color: #000000, $alpha: 0.5);
-//   // position: absolute;
-//   // top: 90%;
-//   // left: 50%;
-//   // margin-left: -50%;
-//   // transform: translate(-50%, -50%);
-
-//   &:hover {
-//     background: var(--blue-800);
-//     box-shadow: insent 2px 2px 2px rgba($color: #000000, $alpha: 0.2);
-//     text-shadow: none;
-//   }
-// }
 
 .formContainer {
-
+    border-left: 2px solid #f1f1f1;
     padding: 3rem 4rem;
   
     width: 45.25rem;
     height: 100vh;
   
-    background: var(--blue-50);
+    background: #ffff;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-
+    align-items: flex-start;
+    overflow-y: auto;
+    
     h1{
-      text-align: center;
       margin-bottom: 0.5rem;
     }
 
     p{
-      text-align: center;
       margin-bottom: 3rem;
     }
 
-    input, select, textarea{
-      border-radius: 5px;
-      margin-bottom: 1rem;
+    form{
+      width: 100%;
     }
-
-    input {
-      width: 34.25rem;
-      height: 2.5rem;
-    }
-
-    select {
-      height: 2.5rem;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 0.5rem;
-    }
-
-    .buttonSubmit {
-      text-align: center;
-      font-size: 1.2rem;
-      color: var(--white);
-      width: 12rem;
-      height: 3.5rem;
-      background: var(--blue-200);
-      border-radius: 8px;
-    }
-}
+  } 
+  
+  .buttonSubmite {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+  }
