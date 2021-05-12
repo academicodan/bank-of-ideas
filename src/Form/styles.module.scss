@@ -1,0 +1,32 @@
+
+.formContainer {
+    border-left: 2px solid #f1f1f1;
+    padding: 3rem 4rem;
+  
+    width: 45.25rem;
+    height: 100vh;
+  
+    background: #ffff;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    overflow-y: auto;
+    
+    h1{
+      margin-bottom: 0.5rem;
+    }
+
+    p{
+      margin-bottom: 3rem;
+    }
+
+    form{
+      width: 100%;
+    }
+  } 
+  
+  .buttonSubmite {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+  }
