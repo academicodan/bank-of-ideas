@@ -22,7 +22,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "src/pages/table.jsx", "src/Components/TemasGrid/index.jsx"  ],
   "exclude": [
     "node_modules"
   ]

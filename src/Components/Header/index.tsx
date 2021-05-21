@@ -16,6 +16,3 @@ export function Header() {
     </header>
   );
 }
-
-
-// p e span 

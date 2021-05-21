@@ -1,7 +1,12 @@
 .wrapper {
   display: flex;
-
   main {
     flex: 1; //ocupa o maior espaço possivel e é flexivel
   }
+}
+
+.home {
+  padding: 2rem 2rem;
+  height: calc(100vh -  6.5rem) ;
+  overflow-y: scroll;
 }
