@@ -13,7 +13,7 @@ import filesize from 'filesize'
 export function Form({ isMenuVisible, setIsMenuVisible }) {
 
   const [tema, setTema] = useState<string | unknown>("");
-  const [nomeEquipe, setNomeEquipe] = useState<string>("");
+  const [subtema, setSubtema] = useState<string | unknown>("");
   const [responsavel, setResponsavel] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [integrantes, setIntegrantes] = useState<string>("");
@@ -25,7 +25,7 @@ export function Form({ isMenuVisible, setIsMenuVisible }) {
     uploadedFiles: []
   })
 
-  
+
   const handleUpload = (files) => {
     const uploadedFiles = files.map(file => ({
       file, //info para enviar viar api
@@ -50,7 +50,7 @@ export function Form({ isMenuVisible, setIsMenuVisible }) {
   function limparCampos() {
     setTema("");
     setEmail("");
-    setNomeEquipe("");
+    setSubtema("")
     setResponsavel("");
     setIntegrantes("");
     setQuesito("");
@@ -58,9 +58,9 @@ export function Form({ isMenuVisible, setIsMenuVisible }) {
   }
 
   const handleDelete = async (id) => {
-   setStateFile({
-     uploadedFiles: stateFile.uploadedFiles.filter(file => file.id !== id),
-   })
+    setStateFile({
+      uploadedFiles: stateFile.uploadedFiles.filter(file => file.id !== id),
+    })
   }
 
 
@@ -75,7 +75,7 @@ export function Form({ isMenuVisible, setIsMenuVisible }) {
         <form action=""
           onSubmit={(event) => {
             event.preventDefault();
-            ColetarDados({ tema, nomeEquipe, responsavel, email, integrantes, quesito, ideia })
+            ColetarDados({ tema, subtema, responsavel, email, integrantes, quesito, ideia })
           }}
         >
 
@@ -96,17 +96,22 @@ export function Form({ isMenuVisible, setIsMenuVisible }) {
             </Select>
           </FormControl >
 
-          <TextField
-            value={nomeEquipe}
-            id="nomeEquipe"
-            label="Nome da equipe"
-            name="nomeEquipe"
-            fullWidth
-            margin="normal"
-            onChange={(event) => {
-              setNomeEquipe(event.target.value)
-            }}
-          />
+          <FormControl required fullWidth margin="normal">
+            <InputLabel >Selecione o subtema</InputLabel>
+            <Select
+              value={subtema}
+              name="subtema"
+              onChange={(event) => {
+                setSubtema(event.target.value)
+              }}
+            >
+              <MenuItem value="Tema 1">Theme name</MenuItem>
+              <MenuItem value="Tema 2">Theme name</MenuItem>
+              <MenuItem value="Tema 3">Theme name</MenuItem>
+              <MenuItem value="Tema 4">Theme name</MenuItem>
+              <MenuItem value="Tema 5">Theme name</MenuItem>
+            </Select>
+          </FormControl >
 
           <TextField
             value={responsavel}
@@ -180,7 +185,7 @@ export function Form({ isMenuVisible, setIsMenuVisible }) {
           </div>
           {!!stateFile.uploadedFiles.length && (
             <div className={style.upload}>
-              <FileList files={stateFile.uploadedFiles} onDelete={handleDelete}/>
+              <FileList files={stateFile.uploadedFiles} onDelete={handleDelete} />
             </div>
           )
           }
