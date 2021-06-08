@@ -9,7 +9,7 @@ const Upload = ({onUpload}) => {
       return <UploadMessage>Arraste arquivos aqui...</UploadMessage>
     }
     if(isDragReject) {
-      return <UploadMessage type="error">Arquivo não suportado</UploadMessage>
+      return <UploadMessage type="error">Arquivo não suportado!</UploadMessage>
     }
     return <UploadMessage type="success">Solte os arquivos aqui</UploadMessage>
 
