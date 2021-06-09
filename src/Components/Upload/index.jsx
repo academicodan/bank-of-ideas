@@ -12,12 +12,11 @@ const Upload = ({onUpload}) => {
       return <UploadMessage type="error">Arquivo não suportado!</UploadMessage>
     }
     return <UploadMessage type="success">Solte os arquivos aqui</UploadMessage>
-
   };
 
   return(
-    <Dropzone accept=".pdf" onDropAccepted={onUpload} >
-      {({ getRootProps, getInputProps, isDragActive,isDragReject}) => (
+    <Dropzone accept="application/pdf" onDropAccepted={onUpload} >
+      {({ getRootProps, getInputProps, isDragActive, isDragReject}) => (
         <DropContainer
           {...getRootProps()}
           isDragActive={isDragActive}
