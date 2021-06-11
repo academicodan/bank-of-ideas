@@ -96,7 +96,7 @@
 // }
 
 
-import React, { useState, forwardRef } from 'react';
+import React, { useState,useEffect, forwardRef } from 'react';
 
 import MaterialTable, {MTableToolbar} from 'material-table';
 
@@ -114,7 +114,9 @@ import LastPage from '@material-ui/icons/LastPage';
 import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
-import ViewColumn from '@material-ui/icons/ViewColumn';
+import ViewColumn from '@material-ui/icons/ViewColumn'
+import axios from 'axios';
+import { busca } from '../../pages/api/buscar';
 import {
   Box,
   Typography,
@@ -140,14 +142,38 @@ const tableIcons = {
   ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
 };
 
-const empList = [
+/**const empList = [
   { id: 1, tema: "Cidades inteligentes", subtema: "sustentabilidade", dataInicio: "21/03/2021", dataFim: "15/08/2021", requisitos: 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don' },
   { id: 2, tema: "Cidades inteligentes", subtema: "envelhecimento", dataInicio: "21/03/2021", dataFim: "15/08/2021", requisitos: 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don' },
   { id: 3, tema: "Cidades inteligentes", subtema: "", dataInicio: "21/03/2021", dataFim: "15/08/2021", requisitos: 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don' },
-]
+]**/
+// const empList = [
+//   { id: '1', tema: 'Cidades inteligentres', subtema: "Evelhecimento", equipe: 'EquipeXYZ', responsavel: 'João da Silva', email: 'joao@gmail.com', membros: "1-3", quesito: 'Tenho uma solução para um problema', 
+//   descricao: 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don' },
 
+// ]
 export function TemasGrid() {
-  const [data, setData] = useState(empList)
+  
+
+  function verificarLogin(){
+    var userexist = localStorage.getItem('user');
+    console.log("userexist: "+userexist);
+    if(userexist == ""){
+      location.href = "/login";
+    }  
+  }
+
+  useEffect(() => {
+    verificarLogin();
+  }, [])
+  // const [posts, setPosts] = useState([])
+  const [data, setData] = useState([])
+  useEffect(() => {
+    busca("/gettemas", setData)
+  }, [])
+
+  
+
 
   const columns = [
     { title: "ID", field: "id", editable: false },
@@ -192,7 +218,18 @@ export function TemasGrid() {
             onRowAdd: (newRow) => new Promise((resolve, reject) => {
               const updatedRows = [...data, { id: Math.floor(Math.random() * 100), ...newRow }]
               setTimeout(() => {
-                setData(updatedRows)
+                axios.get(`http://localhost:8000/adicionartema?tema=${newRow.tema}&&subtema=${newRow.subtema}&&datainicio=${newRow.dataInicio}&&datafim=${newRow.dataFim}&&requisitos=${newRow.requisitos}&&admin=admin1`)
+                .then(res => {
+                  if(res.data.lastRowid != null && res.data.lastRowid != ''){
+                    alert("inseriu: "+res.data.lastRowid);
+                    location.reload();
+                    //setData(updatedRows)
+                  }
+                  else{
+                    alert("erro ao inserir: "+JSON.stringify(res));
+                  }
+                })
+                
                 resolve()
               }, 2000)
             }),
@@ -201,7 +238,19 @@ export function TemasGrid() {
               const updatedRows = [...data]
               updatedRows.splice(index, 1)
               setTimeout(() => {
-                setData(updatedRows)
+                console.log(selectedRow);
+                axios.get(`http://localhost:8000/deletetema?tema=${selectedRow.tema}&&subtema=${selectedRow.subtema}`)
+                .then(res => {
+                  if(res.data.lastRowid != null && res.data.lastRowid != ''){
+                    alert("deletou: "+res.data.lastRowid);
+                    location.reload();
+                    //setData(updatedRows)
+                  }
+                  else{
+                    alert("erro ao deletar: "+JSON.stringify(res));
+                  }
+                })
+                //setData(updatedRows)
                 resolve()
               }, 2000)
             }),
@@ -211,7 +260,18 @@ export function TemasGrid() {
               updatedRows[index] = updateRow
               console.log("Update row", updateRow)
               setTimeout(() => {
-                setData(updatedRows)
+                axios.get(`http://localhost:8000/updatetema?tema=${updateRow.tema}&&subtema=${updateRow.subtema}&&datainicio=${updateRow.dataInicio}&&datafim=${updateRow.dataFim}&&requisitos=${updateRow.requisitos}`)
+                  .then(res => {
+                    if(res.data.lastRowid != null && res.data.lastRowid != ''){
+                      alert("atualizou: "+res.data.lastRowid);
+                      location.reload();
+                      //setData(updatedRows)
+                    }
+                    else{
+                      alert("erro ao atualizar: "+JSON.stringify(res));
+                    }
+                  })
+                //setData(updatedRows)
                 resolve()
               }, 2000)
             })

@@ -10,6 +10,7 @@ import Upload from '../Upload/index'
 import FileList from "../FileList/index"
 import { uniqueId } from 'lodash'
 import filesize from 'filesize'
+import axios from 'axios'
 export function Form({ isMenuVisible, setIsMenuVisible }) {
 
   const [tema, setTema] = useState<string | unknown>("");
@@ -20,6 +21,7 @@ export function Form({ isMenuVisible, setIsMenuVisible }) {
   const [quesito, setQuesito] = useState<string>("");
   const [ideia, setIdeia] = useState<string>("");
   const [dadosColetados, setDados] = useState([]);
+  const [listaTemas, setListaTemas] = useState([])
 
   const [stateFile, setStateFile] = useState({
     uploadedFiles: []
@@ -40,12 +42,65 @@ export function Form({ isMenuVisible, setIsMenuVisible }) {
   }
 
 
+
   function ColetarDados(dados) {
     const newDados = [...dadosColetados, dados]
     setDados(newDados);
-    console.log({ dadosColetados })
+    axios.get(`http://localhost:8000/adicionarideia?tema=${dadosColetados[0].tema}&&subtema=${dadosColetados[0].subtema}&&responsavel=${dadosColetados[0].responsavel}&&email=${dadosColetados[0].email}&&integrantes=${dadosColetados[0].integrantes}&&quesito=${dadosColetados[0].quesito}&&desc=${dadosColetados[0].ideia}`)
+    .then(res => {
+      if(res.data.lastRowid != null && res.data.lastRowid != ''){
+        alert("inseriu: "+res.data.lastRowid);
+      }
+      else{
+        alert("erro ao inserir: "+JSON.stringify(res));
+      }
+    })
+
+
+    console.log({dadosColetados})
     limparCampos()
   }
+
+  var listatemasaux = [];
+  function getTemasSubtemas(){
+    axios.get(`http://localhost:8000/gettemas`)
+    .then(response => {
+
+      for(var i = 0; i < response.data.length;i++){
+        console.log("entrou");
+        listatemasaux[i] = new Object();
+        for(var j = 0; j < response.data[i].length; j++){
+          listatemasaux[i].id = i+1;
+          if(j == 0){
+            listatemasaux[i].tema = response.data[i][j].toString();
+            console.log("tema: "+listatemasaux[i].tema);
+            //alert("tema1: "+empList[i].tema);
+            //empList[i].subtema = "subtema";
+          }
+          else if(j == 1){
+            listatemasaux[i].subtema = response.data[i][j].toString();
+            console.log("subtema: "+listatemasaux[i].subtema);
+          }
+          /**
+          else if(j == 2){
+            listatemas[i].dataInicio = response.data[i][j].toString();
+          }
+          else if(j == 3){
+            listatemas[i].dataFim = response.data[i][j].toString();
+          }
+          else if(j == 4){
+            listatemas[i].requisitos = response.data[i][j];
+          }*/
+        }
+        
+      }
+      setListaTemas(listatemasaux);
+    })
+  }
+
+  useEffect(() => {
+    getTemasSubtemas();
+  }, [])
 
   function limparCampos() {
     setTema("");
@@ -75,43 +130,45 @@ export function Form({ isMenuVisible, setIsMenuVisible }) {
         <form action=""
           onSubmit={(event) => {
             event.preventDefault();
-            ColetarDados({ tema, subtema, responsavel, email, integrantes, quesito, ideia })
+            ColetarDados({tema, subtema, responsavel, email, integrantes, quesito, ideia})
           }}
         >
 
-          <FormControl required fullWidth margin="normal">
-            <InputLabel >Selecione o tema</InputLabel>
-            <Select
-              value={tema}
-              name="tema"
-              onChange={(event) => {
-                setTema(event.target.value)
-              }}
-            >
-              <MenuItem value="Tema 1">Theme name</MenuItem>
-              <MenuItem value="Tema 2">Theme name</MenuItem>
-              <MenuItem value="Tema 3">Theme name</MenuItem>
-              <MenuItem value="Tema 4">Theme name</MenuItem>
-              <MenuItem value="Tema 5">Theme name</MenuItem>
+        <FormControl  required fullWidth margin="normal">
+          <InputLabel >Selecione o tema</InputLabel>
+          <Select
+            value={tema}
+            name="tema"
+            onChange={(event) => {
+              setTema(event.target.value)
+            }}
+          >
+          {
+            listaTemas.map((item,i) => (
+              <MenuItem key={i} value={item.tema}>{item.tema}</MenuItem>
+            ))
+          }
+  
             </Select>
-          </FormControl >
+        </FormControl >
 
-          <FormControl required fullWidth margin="normal">
-            <InputLabel >Selecione o subtema</InputLabel>
-            <Select
-              value={subtema}
-              name="subtema"
-              onChange={(event) => {
-                setSubtema(event.target.value)
-              }}
-            >
-              <MenuItem value="Tema 1">Theme name</MenuItem>
-              <MenuItem value="Tema 2">Theme name</MenuItem>
-              <MenuItem value="Tema 3">Theme name</MenuItem>
-              <MenuItem value="Tema 4">Theme name</MenuItem>
-              <MenuItem value="Tema 5">Theme name</MenuItem>
+        <FormControl  required fullWidth margin="normal">
+          <InputLabel >Selecione o subtema</InputLabel>
+          <Select
+            value={subtema}
+            name="subtema"
+            onChange={(event) => {
+              setSubtema(event.target.value)
+            }}
+          >
+          {
+            listaTemas.map((item,i) => (
+              <MenuItem key={i} value={item.subtema}>{item.subtema}</MenuItem>
+            ))
+          }
+  
             </Select>
-          </FormControl >
+        </FormControl >
 
           <TextField
             value={responsavel}

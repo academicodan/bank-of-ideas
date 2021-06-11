@@ -3,7 +3,6 @@ import Link from 'next/link';
 
 export function HeaderAdmin() {
 
-
   return (
     <header className={style.headerContainer}>
       <Link href="/adminpage">

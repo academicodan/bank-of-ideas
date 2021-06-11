@@ -112,7 +112,7 @@
 
 
 
-import React, { useState, forwardRef } from 'react';
+import React, { useState,useEffect, forwardRef } from 'react';
 
 import MaterialTable, { MTableToolbar } from 'material-table';
 
@@ -131,6 +131,7 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
+import { buscaIdeiasAdmin } from '../../pages/api/buscar';
 import {
   Box,
   Typography,
@@ -156,23 +157,28 @@ const tableIcons = {
   ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
 };
 
-const empList = [
-  { id: '1', tema: 'Cidades inteligentres', subtema: "Evelhecimento", equipe: 'EquipeXYZ', responsavel: 'João da Silva', email: 'joao@gmail.com', membros: "1-3", quesito: 'Tenho uma solução para um problema', 
-  descricao: 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don' },
+// const empList = [
+//   { id: '1', tema: 'Cidades inteligentres', subtema: "Evelhecimento", equipe: 'EquipeXYZ', responsavel: 'João da Silva', email: 'joao@gmail.com', integrantes: "1-3", quesito: 'Tenho uma solução para um problema', 
+//   descricao: 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don' },
 
-]
+// ]
 
 export function IdeiasCadastradas() {
-  const [data, setData] = useState(empList)
+  //const [data, setData] = useState(empList)
+
+  const [data, setData] = useState([])
+  useEffect(() => {
+    buscaIdeiasAdmin("/getIdeiasAdmin?admin=admin1", setData)
+  }, [])
+
 
   const columns = [
     { title: "ID", field: "id", editable: false },
     { title: "Tema", field: "tema" },
     { title: "Subtema", field: "subtema" },
-    { title: "Equipe", field: "equipe" },
     { title: "Responsavel", field: "responsavel" },
     { title: "Email", field: "email", },
-    { title: "Membros", field: "membros" },
+    { title: "Integrantes", field: "integrantes" },
   ]
 
   return (

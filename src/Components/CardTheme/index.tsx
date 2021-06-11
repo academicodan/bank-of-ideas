@@ -1,6 +1,7 @@
 import { Card, CardContent, InputAdornment, makeStyles, TextField, Typography } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
-import { useState } from 'react';
+import { busca } from '../../pages/api/buscar';
+import { useState, useEffect } from 'react';
 
 
 const useStyles = makeStyles({
@@ -8,7 +9,7 @@ const useStyles = makeStyles({
     minWidth: "3rem",
   },
 
-  titulo: {
+  tema: {
     fontSize: "1.2rem",
   },
 
@@ -25,8 +26,8 @@ function Cards({ contextCard }) {
     <Card className={classes.container} style={{marginBottom: "2rem"}}>
       <CardContent>
           <div style={{display: "flex", justifyContent:"space-between"}}>
-          <Typography variant="h6" component="h6" gutterBottom className={classes.titulo}>
-            {contextCard.titulo} 
+          <Typography variant="h6" component="h6" gutterBottom className={classes.tema}>
+            {contextCard.tema} 
           </Typography>
           <Typography variant="body1" component="h6">
             {contextCard.subtema} 
@@ -45,41 +46,41 @@ function Cards({ contextCard }) {
 
 const themes = [
   {
-    titulo: "Cidades Inteligentes",
+    tema: "Cidades Inteligentes",
     subtema: "Preservação ambiental",
     dataInicio: "10-03-2021",
     dataFim: "20-06-2021",
     requisitos: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In lacus ipsum, rutrum eu luctus quis, consectetur et neque. Integer risus ligula, cursus eget placerat sed, venenatis sit amet justo."
   },
   {
-    titulo: "Cidades Inteligentes",
+    tema: "Cidades Inteligentes",
     subtema: "Preservação ambiental",
     dataInicio: "10-03-2021",
     dataFim: "20-06-2021",
     requisitos: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In lacus ipsum, rutrum eu luctus quis, consectetur et neque. Integer risus ligula, cursus eget placerat sed, venenatis sit amet justo."
   },
   {
-    titulo: "Teste",
+    tema: "Teste",
     subtema: "Preservação ambiental",
     dataInicio: "10-03-2021",
     dataFim: "20-06-2021",
     requisitos: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In lacus ipsum, rutrum eu luctus quis, consectetur et neque. Integer risus ligula, cursus eget placerat sed, venenatis sit amet justo."
   },
   {
-    titulo: "Cidades Inteligentes",
+    tema: "Cidades Inteligentes",
     subtema: "Preservação ambiental",
     dataInicio: "10-03-2021",
     dataFim: "20-06-2021",
     requisitos: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In lacus ipsum, rutrum eu luctus quis, consectetur et neque. Integer risus ligula, cursus eget placerat sed, venenatis sit amet justo."
   },
   {
-    titulo: "Cidades Inteligentes",
+    tema: "Cidades Inteligentes",
     dataInicio: "10-03-2021",
     dataFim: "20-06-2021",
     requisitos: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In lacus ipsum, rutrum eu luctus quis, consectetur et neque. Integer risus ligula, cursus eget placerat sed, venenatis sit amet justo."
   },
   {
-    titulo: "Cidades Inteligentes",
+    tema: "Cidades Inteligentes",
     dataInicio: "10-03-2021",
     dataFim: "20-06-2021",
     requisitos: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In lacus ipsum, rutrum eu luctus quis, consectetur et neque. Integer risus ligula, cursus eget placerat sed, venenatis sit amet justo."
@@ -90,7 +91,13 @@ const themes = [
 
 export function CardTheme() {
   const [search, setSearch] = useState('')
-  const [auxList, setAuxList] = useState(themes)
+
+  //const [data, setData] = useState([])
+  const [auxList, setAuxList] = useState([])
+  useEffect(() => {
+    busca("/gettemas", setAuxList)
+  }, [])
+  //const [auxList, setAuxList] = useState(themes)
 
   const getFilteredList = () => {
     const tempList = auxList
@@ -98,7 +105,7 @@ export function CardTheme() {
       if(search.trim() === '') {
         return item
       } else {
-        return item.titulo.toLowerCase().includes(search.toLowerCase())
+        return item.tema.toLowerCase().includes(search.toLowerCase())
       }
     })
     return tempList;
