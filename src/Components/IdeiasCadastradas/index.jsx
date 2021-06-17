@@ -166,6 +166,19 @@ const tableIcons = {
 export function IdeiasCadastradas() {
   //const [data, setData] = useState(empList)
   
+  function verificarLogin(){
+    var userexist = localStorage.getItem('user');
+    console.log("userexist: "+userexist);
+    if(userexist == ""){
+      location.href = "/login";
+    }  
+  }
+
+  useEffect(() => {
+    verificarLogin();
+  }, [])
+
+
   const [data, setData] = useState([])
   useEffect(() => {
     var adminName = localStorage.getItem('user');
