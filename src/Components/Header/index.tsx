@@ -13,7 +13,7 @@ export function Header({isMenuVisible, setIsMenuVisible}) {
       <img src="/logo.png" alt="ideia-aqui" style={{width: "10rem", height:"10rem"}} />
       <p>Banco de ideias</p>
       <Button onClick={() => setIsMenuVisible(!isMenuVisible)} variant="contained" color="primary" style={{marginLeft: "auto"}} >
-        Realizar inscrição
+        Registrar ideia
       </Button>
     </header>
   );

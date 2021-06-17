@@ -132,6 +132,23 @@ export function CardTheme() {
           <Cards key={index} contextCard={theme} />
         ))
       }
+
+      <div>
+        {
+          auxList.length === 0 ? (
+            <Card >
+            <CardContent style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                <Typography variant="body2">
+                  Não há temas para exibir
+                </Typography>
+            </CardContent>
+          </Card>
+          ) : (
+            <> 
+            </>
+          )
+        }
+      </div>
     </>
   );
 }

@@ -214,16 +214,16 @@ export function IdeiasCadastradas() {
           render: rowData => {
             return (
               <Box margin={1}>
-                <Typography variant="body2" gutterBottom>
+                <Typography variant="h6" gutterBottom>
                   Quesitos
-                  </Typography>
-                <Typography>
+                </Typography>
+                <Typography variant="body2" style={{marginBottom: "5px"}}>
                   {rowData.quesito}
                 </Typography>
-                <Typography variant="body2" gutterBottom>
+                <Typography variant="h6" gutterBottom>
                   Descrição
-                  </Typography>
-                <Typography>
+                </Typography>
+                <Typography variant="body2">
                   {rowData.descricao}
                 </Typography>
               </Box>
