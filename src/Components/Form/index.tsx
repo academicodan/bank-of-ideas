@@ -133,7 +133,7 @@ export function Form({ isMenuVisible, setIsMenuVisible }) {
         <IconButton onClick={() => setIsMenuVisible(!isMenuVisible)}>
           <CloseRoundedIcon />
         </IconButton>
-        <h1 id="title" className={style.title}>Cadastro de ideias</h1>
+        <h1 id="title" className={style.title}>Registro de ideia</h1>
         <p id="caption" className={style.caption}>Preencha as informações</p>
         <form action=""
           onSubmit={(event) => {
@@ -255,7 +255,7 @@ export function Form({ isMenuVisible, setIsMenuVisible }) {
           )
           }
           <Button variant="contained" color="primary" fullWidth type="submit">
-            CADASTRAR
+            Registrar
           </Button>
         </form>
       </div>
