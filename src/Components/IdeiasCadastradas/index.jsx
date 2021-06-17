@@ -165,10 +165,11 @@ const tableIcons = {
 
 export function IdeiasCadastradas() {
   //const [data, setData] = useState(empList)
-
+  
   const [data, setData] = useState([])
   useEffect(() => {
-    buscaIdeiasAdmin("/getIdeiasAdmin?admin=admin1", setData)
+    var adminName = localStorage.getItem('user');
+    buscaIdeiasAdmin("/getIdeiasAdmin?admin="+adminName, setData)
   }, [])
 
 

@@ -16,18 +16,17 @@ export default function Login() {
 
   const [email, setEmail] = useState<string>("");
   const [senha, setSenha] = useState<string>("");
-  const [dadosColetados, setDados] = useState({email,senha});
 
   function ColetarDados(dados) {
-    setDados(dados);
-    console.log(dadosColetados);
-    axios.get(`http://localhost:8000/loginAdmin?user=${dadosColetados.email}&&pass=${dadosColetados.senha}`)
+    //setDados(dados);
+    //console.log(dadosColetados);
+    axios.get(`http://localhost:8000/loginAdmin?user=${dados.email}&&pass=${dados.senha}`)
     .then(res => {
       if(res.data == "logado"){
         alert("logou");
         location.href = "/adminPage";
-        localStorage.setItem("user",dadosColetados.email);
-        localStorage.setItem("pass",dadosColetados.senha);
+        localStorage.setItem("user",dados.email);
+        localStorage.setItem("pass",dados.senha);
       }
       else{
         alert("erro ao logar, verifique o usuario ou senha");
@@ -35,7 +34,7 @@ export default function Login() {
     })
 
 
-    console.log({dadosColetados})
+    console.log({dados})
   }
 
 
@@ -55,14 +54,14 @@ export default function Login() {
           <Typography variant="subtitle2" >
             Faça o Login no seu banco de ideias
           </Typography>
-          <TextField value={email} label="Email" type="text" fullWidth margin="normal"
+          <TextField value={email} label="Usuario" type="text" fullWidth margin="normal"
           
           onChange={(event) => {
             setEmail(event.target.value)
           }}
           
           />
-          <TextField value={senha} label="Senha" type="senha" fullWidth margin="normal"
+          <TextField value={senha} label="Senha" type="password" fullWidth margin="normal"
           
           onChange={(event) => {
             setSenha(event.target.value)

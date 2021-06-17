@@ -20,7 +20,6 @@ export function Form({ isMenuVisible, setIsMenuVisible }) {
   const [integrantes, setIntegrantes] = useState<string>("");
   const [quesito, setQuesito] = useState<string>("");
   const [ideia, setIdeia] = useState<string>("");
-  const [dadosColetados, setDados] = useState([]);
   const [listaTemas, setListaTemas] = useState([])
 
   const [stateFile, setStateFile] = useState({
@@ -39,14 +38,23 @@ export function Form({ isMenuVisible, setIsMenuVisible }) {
     setStateFile({
       uploadedFiles: stateFile.uploadedFiles.concat(uploadedFiles)
     });
+    
+    //uploadedFiles.forEach(processUpload);
+
   }
+
+  // const processUpload = (uploadedFile) => {
+  //   const data = new FormData();
+  //   data.append('file', uploadedFile.file, uploadedFile.name);
+
+  // }
 
 
 
   function ColetarDados(dados) {
-    const newDados = [...dadosColetados, dados]
-    setDados(newDados);
-    axios.get(`http://localhost:8000/adicionarideia?tema=${dadosColetados[0].tema}&&subtema=${dadosColetados[0].subtema}&&responsavel=${dadosColetados[0].responsavel}&&email=${dadosColetados[0].email}&&integrantes=${dadosColetados[0].integrantes}&&quesito=${dadosColetados[0].quesito}&&desc=${dadosColetados[0].ideia}`)
+    //const newDados = [...dadosColetados, dados]
+    //setDados(dados);
+    axios.get(`http://localhost:8000/adicionarideia?tema=${dados.tema}&&subtema=${dados.subtema}&&responsavel=${dados.responsavel}&&email=${dados.email}&&integrantes=${dados.integrantes}&&quesito=${dados.quesito}&&desc=${dados.ideia}`)
     .then(res => {
       if(res.data.lastRowid != null && res.data.lastRowid != ''){
         alert("inseriu: "+res.data.lastRowid);
@@ -57,7 +65,7 @@ export function Form({ isMenuVisible, setIsMenuVisible }) {
     })
 
 
-    console.log({dadosColetados})
+    console.log({dados})
     limparCampos()
   }
 
@@ -215,10 +223,10 @@ export function Form({ isMenuVisible, setIsMenuVisible }) {
             <RadioGroup aria-label="Quesitos" name="quesito" value={quesito} onChange={(event) => {
               setQuesito(event.target.value)
             }}>
-              <FormControlLabel value="Quesito 1" control={<Radio color="primary" />} label="Tenho um problema e preciso de uma solução" />
-              <FormControlLabel value="Quesito 2" control={<Radio color="primary" />} label="Tenho uma solução para um problema" />
-              <FormControlLabel value="Quesito 3" control={<Radio color="primary" />} label="Quero desenvolver um produto" />
-              <FormControlLabel value="Quesito 4" control={<Radio color="primary" />} label="Outros" />
+              <FormControlLabel value="Tenho um problema e preciso de uma solucao" control={<Radio color="primary" />} label="Tenho um problema e preciso de uma solução" />
+              <FormControlLabel value="Tenho uma solução para um problema" control={<Radio color="primary" />} label="Tenho uma solução para um problema" />
+              <FormControlLabel value="Quero desenvolver um produto" control={<Radio color="primary" />} label="Quero desenvolver um produto" />
+              <FormControlLabel value="Outros" control={<Radio color="primary" />} label="Outros" />
             </RadioGroup>
           </FormControl>
 
@@ -234,7 +242,7 @@ export function Form({ isMenuVisible, setIsMenuVisible }) {
             label="Descrição da ideia"
             placeholder="Detalhe aqui sua ideia..."
             multiline
-            variant="outlined"
+            inputProps={{ maxLength: 299 }}
             required
           />
           <div className={style.upload}>
